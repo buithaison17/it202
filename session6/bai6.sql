@@ -10,7 +10,7 @@ select p.productId, p.productName, sum(oi.quantity) as totalQuantity
 from products p
 join orderitems oi on oi.productId = p.productId
 group by p.productId
-having totalQuantity > 10;
+having totalQuantity >= 10;
 
 -- Doanh thu giảm dần
 select p.productId, p.productName, sum(oi.quantity * p.price) as totalRevenue
