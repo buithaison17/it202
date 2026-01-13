@@ -334,6 +334,50 @@ group by p.post_id
 order by count(post_id) desc
 limit 5; 
 
+-- Bài 12
+delimiter $$
+create procedure sp_add_comment(
+    in p_user_id int,
+    in p_post_id int,
+    in p_content text
+)
+begin
+    declare user_exists int default 0;
+    declare post_exists int default 0;
+
+    select count(*) into user_exists
+    from users
+    where user_id = p_user_id;
+
+    select count(*) into post_exists
+    from posts
+    where post_id = p_post_id;
+
+    if user_exists = 0 then
+        select 'lỗi: user không tồn tại' as message;
+    elseif post_exists = 0 then
+        select 'lỗi: post không tồn tại' as message;
+    elseif p_content is null or trim(p_content) = '' then
+        select 'lỗi: nội dung bình luận rỗng' as message;
+    else
+        insert into comments(user_id, post_id, content)
+        values(p_user_id, p_post_id, p_content);
+        select 'thêm bình luận thành công' as message;
+    end if;
+end $$
+delimiter ;
+
+create or replace view vw_post_comments as
+select 
+    c.content as comment_content,
+    u.username as commenter_name,
+    c.created_at
+from comments c
+join users u on c.user_id = u.user_id
+order by c.created_at desc;
+call sp_add_comment(1, 2, 'he he he he he he');
+select * from vw_post_comments;
+
 -- BÀI 13. QUẢN LÝ LƯỢT THÍCH
 delimiter $$
 create procedure likePost(user_id_in int, post_id_in int)
