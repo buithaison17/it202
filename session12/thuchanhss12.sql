@@ -423,7 +423,5 @@ call searchSocial(1, "an", @message);
 call searchSocial(2, "database", @message);
 
 select @message;
-
 select * from posts;
-
 drop procedure searchSocial;
