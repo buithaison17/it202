@@ -277,7 +277,7 @@ drop procedure createPost;
 -- Bài 5: Hiển thị News Feed bằng VIEW 
 create or replace view vw_recent_posts as
 select * from posts
-where created_at >= date_sub(current_date(), interval 7 day);
+where created_at >= subdate(now(), 7);
 
 select * from vw_recent_posts;
 
