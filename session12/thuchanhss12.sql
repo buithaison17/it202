@@ -387,7 +387,7 @@ begin
     select user_id into isNull from likes
     where user_id = user_id_in and post_id = post_id_in;
     
-    if isNull is null is not null then
+    if isNull is null then
 		insert into likes(user_id, post_id) values(user_id_in, post_id_in);
     end if;
 end $$
