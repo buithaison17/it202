@@ -121,6 +121,9 @@ call sp_register_user('son01', '123456', 'son01@gmail.com');
 call sp_register_user('son02', '123456', 'son02@gmail.com');
 call sp_register_user('son03', '123456', 'son03@gmail.com');
 
+select * from users;
+select * from user_logs;
+
 -- Bài 2: Đăng Bài Viết
 delimiter $$
 create procedure sp_create_post(
@@ -160,6 +163,9 @@ call sp_create_post(2, 'Hôm nay học MySQL');
 call sp_create_post(3, 'Trigger hoạt động tốt');
 call sp_create_post(3, 'Stored Procedure khá hay');
 
+select * from posts;
+select * from post_logs;
+
 -- Bài 3: Thích Bài Viết
 -- Thêm cột like_count cho post
 alter table posts
@@ -196,6 +202,9 @@ drop trigger triggerAfterDeleteLike;
 insert into likes(user_id, post_id) values (2, 1);
 insert into likes(user_id, post_id) values (3, 1);
 insert into likes(user_id, post_id) values (1, 2);
+
+select * from posts;
+select * from likes;
 
 -- Xóa dữ liệu 
 delete from likes
@@ -370,7 +379,6 @@ select * from comments;
 
 -- Bài 8:
 delimiter $$
-
 create procedure sp_delete_user(
 	p_user_id int
 )
@@ -405,3 +413,4 @@ select * from posts;
 select * from comments;
 select * from likes;
 select * from friends;
+
